@@ -24,9 +24,6 @@ class App extends React.Component {
         const current = history[this.state.stepNumber];
         const winResult = calculateWinner(current.squares);
         const isBoardFull = checkIsBoardFull(current.squares);
-
-        //ko doi history ma nguoc lai doi vi tri cac move trong mpa list
-
         const moves = history.map((step, move) => {
             let numberOfStep;
             if (this.state.wasSorted){
