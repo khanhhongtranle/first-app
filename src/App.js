@@ -33,20 +33,19 @@ class App extends React.Component {
                 numberOfStep = this.state.stepNumber;
                 move = numberOfStep - move;
             }
-            if (move < 0){
-                return (<tr style='display: none'/>);
+            if (move > 0){
+                const desc = (move) ? 'Go to move #' + (move) : 'Go to game start';
+                return (
+                    <tr key={move}>
+                        <td>{move}</td>
+                        <td>
+                            <button name={move} className="history" onClick={()=> this.jumpTo(move)}>
+                                {desc}
+                            </button>
+                        </td>
+                    </tr>
+                );
             }
-            const desc = (move) ? 'Go to move #' + (move) : 'Go to game start';
-            return (
-              <tr key={move}>
-                  <td>{move}</td>
-                  <td>
-                      <button name={move} className="history" onClick={()=> this.jumpTo(move)}>
-                          {desc}
-                      </button>
-                  </td>
-              </tr>
-            );
         });
 
         let status;
