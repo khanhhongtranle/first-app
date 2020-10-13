@@ -34,7 +34,7 @@ class App extends React.Component {
                 move = numberOfStep - move;
             }
             if (move < 0){
-                return;
+                return (<tr style='display: none'/>);
             }
             const desc = (move) ? 'Go to move #' + (move) : 'Go to game start';
             return (
