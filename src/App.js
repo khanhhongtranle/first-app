@@ -24,7 +24,6 @@ class App extends React.Component {
         const current = history[this.state.stepNumber];
         const winResult = calculateWinner(current.squares);
         const isBoardFull = checkIsBoardFull(current.squares);
-        // eslint-disable-next-line array-callback-return
         const moves = history.map((step, move) => {
             let numberOfStep;
 
