@@ -24,13 +24,16 @@ class App extends React.Component {
         const current = history[this.state.stepNumber];
         const winResult = calculateWinner(current.squares);
         const isBoardFull = checkIsBoardFull(current.squares);
+        // eslint-disable-next-line array-callback-return
         const moves = history.map((step, move) => {
             let numberOfStep;
+
             if (this.state.wasSorted){
                 numberOfStep = this.state.stepNumber;
                 move = numberOfStep - move;
             }
-            if (move > 0){
+
+            if (move >= 0){
                 const desc = (move) ? 'Go to move #' + (move) : 'Go to game start';
                 return (
                     <tr key={move}>
@@ -62,6 +65,18 @@ class App extends React.Component {
             status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
 
+        const sortBtn = () => {
+            if (this.state.wasSorted){
+                return(
+                    <button  style={{background: 'deepskyblue'}} onClick={() => this.sortHistory()}> Sort newest to oldest</button>
+                );
+            }else{
+                return(
+                    <button  style={{background: '#fff'}} onClick={() => this.sortHistory()}> Sort newest to oldest</button>
+                );
+            }
+        }
+
         return (
             <div className="game">
                 <div className="game-board">
@@ -73,7 +88,7 @@ class App extends React.Component {
                 <div className="game-info">
                     <div>{status}</div>
                     <div>
-                        <button onClick={() => this.sortHistory()}> Sort newest to oldest</button>
+                        {sortBtn()}
                     </div>
                     <div>
                         <table>
