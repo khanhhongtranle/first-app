@@ -45,7 +45,7 @@ export class Board extends React.Component{
             <div>
                 {row.map((value, index) => {
                     return (
-                        <div className="board-row">
+                        <div key={index} className="board-row">
                             {squares.map( (value1, index1) => {
                                 return this.renderSquares(index1 + index*3);
                             })}

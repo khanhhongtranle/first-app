@@ -20,29 +20,34 @@ class App extends React.Component {
     }
 
     render() {
-        const noninversedHistory = this.state.history;
-        const inverseHistory  = noninversedHistory.slice(0).reverse();
-        const current = noninversedHistory[this.state.stepNumber];
+        const history = this.state.history;
+        const current = history[this.state.stepNumber];
         const winResult = calculateWinner(current.squares);
         const isBoardFull = checkIsBoardFull(current.squares);
 
-        const history = this.state.wasSorted ? inverseHistory : noninversedHistory;
         //ko doi history ma nguoc lai doi vi tri cac move trong mpa list
 
         const moves = history.map((step, move) => {
-            const desc = move ? 'Go to move #' + move : 'Go to game start';
+            let numberOfStep;
+            if (this.state.wasSorted){
+                numberOfStep = this.state.stepNumber;
+                move = numberOfStep - move;
+            }
+            if (move < 0){
+                return;
+            }
+            const desc = (move) ? 'Go to move #' + (move) : 'Go to game start';
             return (
               <tr key={move}>
                   <td>{move}</td>
                   <td>
-                      <button className="history" onClick={()=> this.jumpTo(move)}>
+                      <button name={move} className="history" onClick={()=> this.jumpTo(move)}>
                           {desc}
                       </button>
                   </td>
               </tr>
             );
         });
-        debugger;
 
         let status;
 
@@ -117,10 +122,16 @@ class App extends React.Component {
 
 
     jumpTo(step) {
-
         const listMoveButtonElement = document.getElementsByClassName('history');
-        const clickedMoveButton = listMoveButtonElement[(step + 1) - 1];
-        clickedMoveButton.style.background = "powderblue";
+        debugger;
+        for (let i = 0 ; i < listMoveButtonElement.length; i++){
+            const clickedMoveButton = listMoveButtonElement[i];
+            console.log(clickedMoveButton.getAttributeNode('name').value);
+            if (clickedMoveButton.getAttributeNode('name').value === step.toString()){
+                clickedMoveButton.style.background = "powderblue";
+                break;
+            }
+        }
 
         this.setState({
             stepNumber: step,
